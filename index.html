@@ -1,0 +1,118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRATOS | 3D National Command</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #02060e;
+            --accent-cyan: #00f2ff;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --grid-line: rgba(0, 242, 255, 0.05);
+        }
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background-color: var(--bg-deep);
+            color: #cbd5e1;
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+        }
+        .header-font { font-family: 'Orbitron', sans-serif; }
+        .glass-tactical {
+            background: rgba(10, 15, 25, 0.96);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 242, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+        .orbital-view {
+            perspective: 2500px;
+            perspective-origin: 50% 50%;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .map-base-3d {
+            transform-style: preserve-3d;
+            position: relative;
+            width: 800px;
+            height: 800px;
+            transition: transform 0.1s linear;
+        }
+        /* 3D Pillar Geometry */
+        .cube {
+            position: absolute;
+            transform-style: preserve-3d;
+            transform-origin: bottom;
+        }
+        .face {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: currentColor;
+            opacity: 0.8;
+            border: 0.5px solid rgba(255,255,255,0.1);
+        }
+        .face-top {
+            height: var(--size);
+            transform: translateY(calc(-1 * var(--height))) rotateX(90deg);
+            opacity: 1;
+            filter: brightness(1.2);
+        }
+        .face-front {
+            transform: translateZ(calc(var(--size) / 2));
+        }
+        .face-right {
+            transform: translateX(calc(var(--size) / 2)) rotateY(90deg);
+            filter: brightness(0.7);
+        }
+        
+        .satellite-grid {
+            background-image: 
+                linear-gradient(var(--grid-line) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+            background-size: 100px 100px;
+            background-position: center;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .ring {
+            position: absolute;
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50%;
+            animation: pulse-ring 4s infinite;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 242, 255, 0.2); border-radius: 2px; }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "d3": "https://esm.sh/d3@^7.9.0",
+    "@google/genai": "https://esm.sh/@google/genai@^0.2.1"
+  }
+}
+</script>
+</head>
+<body class="satellite-grid">
+    <div id="root" class="h-full relative z-10"></div>
+</body>
+</html>
